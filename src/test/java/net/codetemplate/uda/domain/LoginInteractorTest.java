@@ -34,13 +34,21 @@ public class LoginInteractorTest {
 
     @Test
     public void loginSuccessfully() {
-        new LoginInteractor().execute();
+        new LoginInteractor(userRepository, loginPresenter).execute(loginRequest);
 
         verifySuccessCondition();
     }
 
     private class LoginInteractor {
-        public void execute() {
+        private final UserRepository userRepository;
+        private final LoginPresenter loginPresenter;
+
+        public LoginInteractor(UserRepository userRepository, LoginPresenter loginPresenter) {
+            this.userRepository = userRepository;
+            this.loginPresenter = loginPresenter;
+        }
+
+        public void execute(LoginRequest loginRequest) {
             User user = userRepository.findBy(loginRequest.getId());
             user.login(loginRequest.getPassword());
             LoginResponse loginResponse = new LoginResponse(user.getId());
