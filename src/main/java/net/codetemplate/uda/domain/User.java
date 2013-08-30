@@ -14,4 +14,7 @@ public class User {
     public String getId() {
         return id;
     }
+
+    public class WrongPassword extends RuntimeException {
+    }
 }
